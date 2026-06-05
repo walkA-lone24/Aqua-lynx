@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Driver Registration — AquaBridge</title>
+  <style>
+    :root {
+      --deep:  #0a1a14;
+      --dark:  #0f2318;
+      --mid:   #163020;
+      --teal:  #1a4a30;
+      --green: #2d7a4f;
+      --lime:  #4caf78;
+      --amber: #e8a045;
+      --blue:  #5bb8f5;
+      --cream: #f5f0e8;
+      --white: #ffffff;
+      --muted: #8aaa94;
+      --border: rgba(255,255,255,0.08);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: Georgia, 'Times New Roman', serif;
+      background: var(--deep);
+      color: var(--cream);
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+
+    /* LEFT */
+    .left {
+      background: var(--dark);
+      padding: 3rem;
+      display: flex; flex-direction: column;
+      justify-content: space-between;
+      border-right: 1px solid var(--border);
+      position: relative; overflow: hidden;
+    }
+
+    .left::before {
+      content: '';
+      position: absolute; bottom: -100px; right: -100px;
+      width: 380px; height: 380px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(91,184,245,0.1) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .logo {
+      display: flex; align-items: center; gap: 10px;
+      text-decoration: none; position: relative; z-index: 2;
+    }
+
+    .logo-icon {
+      width: 34px; height: 34px; border-radius: 8px;
+      background: rgba(91,184,245,0.15);
+      display: flex; align-items: center; justify-content: center; font-size: 1.1rem;
+    }
+
+    .logo-text { font-size: 1.2rem; font-weight: bold; color: var(--white); }
+    .logo-text span { color: var(--amber); }
+
+    .left-body { position: relative; z-index: 2; }
+
+    .left-tag {
+      font-family: 'Courier New', monospace;
+      font-size: 0.65rem; letter-spacing: 2px; text-transform: uppercase;
+      color: var(--blue); margin-bottom: 1rem;
+    }
+
+    .left h2 {
+      font-size: clamp(1.8rem, 2.6vw, 2.3rem);
+      font-weight: normal; line-height: 1.2;
+      color: var(--white); margin-bottom: 1rem;
+    }
+
+    .left h2 em { font-style: italic; color: var(--blue); }
+
+    .left p {
+      font-size: 0.88rem; color: var(--muted);
+      line-height: 1.7; max-width: 340px; margin-bottom: 2rem;
+    }
+
+    .perks { list-style: none; }
+
+    .perks li {
+      display: flex; align-items: center; gap: 0.75rem;
+      padding: 0.6rem 0; border-bottom: 1px solid var(--border);
+      font-size: 0.84rem; color: rgba(245,240,232,0.75);
+      font-family: 'Courier New', monospace;
+    }
+
+    .perks li:last-child { border-bottom: none; }
+
+    .perk-dot {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: var(--blue); flex-shrink: 0;
+    }
+
+    /* earnings card */
+    .earn-card {
+      background: rgba(91,184,245,0.06);
+      border: 1px solid rgba(91,184,245,0.2);
+      border-radius: 10px; padding: 1.1rem 1.2rem;
+      position: relative; z-index: 2;
+    }
+
+    .earn-label {
+      font-family: 'Courier New', monospace;
+      font-size: 0.62rem; text-transform: uppercase;
+      letter-spacing: 1.5px; color: var(--blue); margin-bottom: 0.6rem;
+    }
+
+    .earn-row {
+      display: flex; justify-content: space-between; align-items: center;
+      font-size: 0.82rem; padding: 0.3rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .earn-row:last-child { border-bottom: none; }
+    .earn-row .ek { color: var(--muted); font-family: 'Courier New', monospace; font-size: 0.76rem; }
+    .earn-row .ev { color: var(--blue); font-weight: bold; }
+
+    /* RIGHT */
+    .right {
+      padding: 3rem;
+      display: flex; flex-direction: column;
+      justify-content: center;
+      max-width: 520px; width: 100%; margin: 0 auto;
+      overflow-y: auto;
+    }
+
+    .right-header { margin-bottom: 1.8rem; }
+
+    .right-header h3 {
+      font-size: 1.55rem; font-weight: normal;
+      color: var(--white); margin-bottom: 0.3rem;
+    }
+
+    .right-header p {
+      font-family: 'Courier New', monospace;
+      font-size: 0.76rem; color: var(--muted);
+    }
+
+    .right-header p a { color: var(--blue); text-decoration: none; font-weight: bold; }
+    .right-header p a:hover { color: #89ccf8; }
+
+    /* section tag */
+    .section-tag {
+      font-family: 'Courier New', monospace;
+      font-size: 0.62rem; text-transform: uppercase; letter-spacing: 1.5px;
+      color: var(--amber); margin-bottom: 0.8rem;
+      display: flex; align-items: center; gap: 6px;
+    }
+
+    .section-tag::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+    /* form */
+    .form-row {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 0.8rem; margin-bottom: 0.8rem;
+    }
+
+    .form-group { margin-bottom: 0.8rem; }
+
+    label {
+      display: block; font-family: 'Courier New', monospace;
+      font-size: 0.68rem; color: var(--muted);
+      letter-spacing: 0.5px; text-transform: uppercase;
+      margin-bottom: 0.32rem;
+    }
+
+    input, select {
+      width: 100%; padding: 0.7rem 0.9rem;
+      background: var(--mid); color: var(--cream);
+      border: 1px solid var(--border); border-radius: 6px;
+      font-family: Georgia, serif; font-size: 0.88rem;
+      outline: none; transition: border-color 0.2s;
+    }
+
+    input::placeholder { color: var(--muted); }
+    input:focus, select:focus { border-color: var(--blue); }
+    select option { background: var(--mid); }
+
+    /* phone */
+    .phone-row { display: flex; }
+
+    .prefix {
+      padding: 0.7rem 0.75rem;
+      background: var(--teal); color: var(--muted);
+      border: 1px solid var(--border); border-right: none;
+      border-radius: 6px 0 0 6px;
+      font-family: 'Courier New', monospace; font-size: 0.82rem;
+      white-space: nowrap;
+    }
+
+    .phone-row input { border-radius: 0 6px 6px 0; }
+
+    /* pass */
+    .pass-wrap { position: relative; }
+    .pass-wrap input { padding-right: 2.6rem; }
+
+    .pass-eye {
+      position: absolute; right: 0.8rem; top: 50%;
+      transform: translateY(-50%);
+      cursor: pointer; font-size: 0.85rem;
+      color: var(--muted); user-select: none;
+    }
+
+    .pass-eye:hover { color: var(--blue); }
+
+    /* vehicle type chips */
+    .chips { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 0.3rem; }
+
+    .chip {
+      padding: 0.35rem 0.85rem;
+      border: 1px solid var(--border); border-radius: 20px;
+      font-family: 'Courier New', monospace; font-size: 0.75rem;
+      color: var(--muted); cursor: pointer; transition: all 0.2s;
+      user-select: none;
+    }
+
+    .chip:hover { border-color: var(--blue); color: var(--blue); }
+    .chip.on { background: rgba(91,184,245,0.1); border-color: var(--blue); color: var(--blue); }
+
+    /* zones */
+    .zone-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 0.4rem; margin-top: 0.3rem;
+    }
+
+    .zone-opt { position: relative; }
+    .zone-opt input[type="checkbox"] { display: none; }
+
+    .zone-opt label {
+      display: block; padding: 0.5rem 0.75rem;
+      background: var(--mid); border: 1px solid var(--border);
+      border-radius: 6px; cursor: pointer; transition: all 0.2s;
+      font-family: 'Courier New', monospace; font-size: 0.76rem;
+      color: var(--muted); text-transform: none; letter-spacing: 0;
+    }
+
+    .zone-opt input:checked + label {
+      border-color: var(--blue);
+      background: rgba(91,184,245,0.08);
+      color: var(--blue);
+    }
+
+    /* checkbox */
+    .check-row {
+      display: flex; align-items: flex-start; gap: 0.6rem;
+      margin-bottom: 1.2rem;
+    }
+
+    .check-row input[type="checkbox"] {
+      width: 16px; height: 16px; flex-shrink: 0;
+      margin-top: 3px; accent-color: var(--blue); cursor: pointer;
+    }
+
+    .check-row label {
+      font-size: 0.78rem; color: var(--muted);
+      text-transform: none; letter-spacing: 0;
+      font-family: Georgia, serif; cursor: pointer;
+    }
+
+    .check-row label a { color: var(--blue); text-decoration: none; }
+
+    .field-hint {
+      font-family: 'Courier New', monospace;
+      font-size: 0.67rem; color: var(--muted); margin-top: 0.25rem;
+    }
+
+    /* submit */
+    .btn-submit {
+      width: 100%; padding: 0.9rem;
+      background: var(--blue); color: var(--deep);
+      border: none; border-radius: 6px;
+      font-family: Georgia, serif;
+      font-size: 0.95rem; font-weight: bold;
+      cursor: pointer; transition: all 0.2s;
+    }
+
+    .btn-submit:hover {
+      background: #89ccf8;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(91,184,245,0.25);
+    }
+
+    @media (max-width: 800px) {
+      body { grid-template-columns: 1fr; }
+      .left { display: none; }
+      .right { padding: 2rem 1.5rem; max-width: 100%; }
+      .form-row { grid-template-columns: 1fr; }
+      .zone-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- LEFT -->
+  <div class="left">
+    <a href="index.html" class="logo">
+      <div class="logo-icon">🚚</div>
+      <span class="logo-text">Aqua<span>Bridge</span></span>
+    </a>
+
+    <div class="left-body">
+      <div class="left-tag">Driver Registration</div>
+      <h2>Deliver fish &amp; snails.<br><em>Earn 10%</em><br>per order.</h2>
+      <p>Join our verified driver network and earn on every delivery you complete — paid instantly once the buyer releases the OTP.</p>
+
+      <ul class="perks">
+        <li><div class="perk-dot"></div> 10% cut on every completed delivery</li>
+        <li><div class="perk-dot"></div> Payout released instantly via Paystack</li>
+        <li><div class="perk-dot"></div> Flexible — accept only what you want</li>
+        <li><div class="perk-dot"></div> Deliveries across your chosen zones</li>
+        <li><div class="perk-dot"></div> OTP-verified pickup and drop-off</li>
+      </ul>
+    </div>
+
+    <div class="earn-card">
+      <div class="earn-label">// Sample Earnings</div>
+      <div class="earn-row">
+        <span class="ek">Order value</span>
+        <span class="ev">₦50,000</span>
+      </div>
+      <div class="earn-row">
+        <span class="ek">Your cut (10%)</span>
+        <span class="ev">₦5,000</span>
+      </div>
+      <div class="earn-row">
+        <span class="ek">5 orders/week =</span>
+        <span class="ev">₦25,000 / week</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT -->
+  <div class="right">
+
+    <div class="right-header">
+      <h3>Register as a driver</h3>
+      <p>Already registered? <a href="signin.html">Sign in here →</a></p>
+    </div>
+
+    <!-- PERSONAL INFO -->
+    <div class="section-tag">Personal Details</div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label>First Name</label>
+        <input type="text" placeholder="e.g. Emeka" />
+      </div>
+      <div class="form-group">
+        <label>Last Name</label>
+        <input type="text" placeholder="e.g. Obi" />
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Email Address</label>
+      <input type="email" placeholder="you@example.com" />
+    </div>
+
+    <div class="form-group">
+      <label>Phone Number</label>
+      <div class="phone-row">
+        <div class="prefix">🇳🇬 +234</div>
+        <input type="tel" placeholder="8012345678" />
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label>State</label>
+        <select>
+          <option value="">Select State</option>
+          <option>Lagos</option><option>Abuja — FCT</option><option>Rivers</option>
+          <option>Ogun</option><option>Oyo</option><option>Anambra</option>
+          <option>Edo</option><option>Delta</option><option>Enugu</option>
+          <option>Imo</option><option>Kano</option><option>Kaduna</option>
+          <option>Abia</option><option>Akwa Ibom</option><option>Cross River</option>
+          <option>Benue</option><option>Plateau</option><option>Kwara</option>
+          <option>Osun</option><option>Ekiti</option><option>Ondo</option>
+          <option>Bauchi</option><option>Nasarawa</option><option>Niger</option>
+          <option>Sokoto</option><option>Zamfara</option><option>Kebbi</option>
+          <option>Kogi</option><option>Borno</option><option>Adamawa</option>
+          <option>Taraba</option><option>Yobe</option><option>Gombe</option>
+          <option>Jigawa</option><option>Katsina</option><option>Bayelsa</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>City / LGA</label>
+        <input type="text" placeholder="e.g. Ikeja" />
+      </div>
+    </div>
+
+    <!-- VEHICLE INFO -->
+    <div class="section-tag" style="margin-top:0.3rem">Vehicle Details</div>
+
+    <div class="form-group">
+      <label>Vehicle Type</label>
+      <div class="chips">
+        <span class="chip" onclick="pick(this)">🛺 Tricycle (Keke)</span>
+        <span class="chip" onclick="pick(this)">🏍️ Motorcycle</span>
+        <span class="chip" onclick="pick(this)">🚐 Minivan</span>
+        <span class="chip" onclick="pick(this)">🚛 Truck</span>
+        <span class="chip" onclick="pick(this)">🚗 Car</span>
+      </div>
+      <div class="field-hint">Select one vehicle type.</div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label>Vehicle Plate Number</label>
+        <input type="text" placeholder="e.g. LND 123 AA" style="text-transform:uppercase" />
+      </div>
+      <div class="form-group">
+        <label>Vehicle Model</label>
+        <input type="text" placeholder="e.g. Toyota HiAce" />
+      </div>
+    </div>
+
+    <!-- DELIVERY ZONES -->
+    <div class="section-tag" style="margin-top:0.3rem">Delivery Zones</div>
+
+    <div class="form-group">
+      <label>Which areas can you cover?</label>
+      <div class="zone-grid">
+        <div class="zone-opt"><input type="checkbox" id="z1"/><label for="z1">📍 Within my city only</label></div>
+        <div class="zone-opt"><input type="checkbox" id="z2"/><label for="z2">📍 My state only</label></div>
+        <div class="zone-opt"><input type="checkbox" id="z3"/><label for="z3">📍 Neighbouring states</label></div>
+        <div class="zone-opt"><input type="checkbox" id="z4"/><label for="z4">🚛 Nationwide</label></div>
+      </div>
+    </div>
+
+    <!-- PASSWORD -->
+    <div class="section-tag" style="margin-top:0.3rem">Set Password</div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label>Password</label>
+        <div class="pass-wrap">
+          <input type="password" id="p1" placeholder="Min. 8 characters" />
+          <span class="pass-eye" onclick="togglePass('p1',this)">👁</span>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Confirm Password</label>
+        <div class="pass-wrap">
+          <input type="password" id="p2" placeholder="Repeat password" />
+          <span class="pass-eye" onclick="togglePass('p2',this)">👁</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- TERMS -->
+    <div class="check-row">
+      <input type="checkbox" id="terms" />
+      <label for="terms">
+        I agree to AquaBridge's <a href="#">Terms of Service</a> and
+        <a href="#">Driver Policy</a>. I confirm my vehicle documents are valid.
+      </label>
+    </div>
+
+    <button class="btn-submit" onclick="submit()">Submit Driver Application →</button>
+
+  </div>
+
+  <script>
+    let selectedVehicle = null;
+
+    function pick(el) {
+      document.querySelectorAll('.chip').forEach(c => c.classList.remove('on'));
+      el.classList.add('on');
+      selectedVehicle = el.textContent.trim();
+    }
+
+    function togglePass(id, el) {
+      const i = document.getElementById(id);
+      i.type = i.type === 'password' ? 'text' : 'password';
+      el.textContent = i.type === 'password' ? '👁' : '🙈';
+    }
+
+    function submit() {
+      const terms = document.getElementById('terms').checked;
+      if (!terms) { alert('Please agree to the Terms of Service to continue.'); return; }
+      if (!selectedVehicle) { alert('Please select your vehicle type.'); return; }
+      alert('Application submitted! Our team will review and contact you within 24 hours.');
+    }
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Start Selling — AquaBridge</title>
+  <style>
+    :root {
+      --deep:  #0a1a14;
+      --dark:  #0f2318;
+      --mid:   #163020;
+      --teal:  #1a4a30;
+      --green: #2d7a4f;
+      --lime:  #4caf78;
+      --amber: #e8a045;
+      --cream: #f5f0e8;
+      --white: #ffffff;
+      --muted: #8aaa94;
+      --border: rgba(255,255,255,0.08);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: Georgia, 'Times New Roman', serif;
+      background: var(--deep);
+      color: var(--cream);
+    }
+
+    /* NAV */
+    nav {
+      padding: 1.1rem 5%;
+      display: flex; align-items: center; justify-content: space-between;
+      border-bottom: 1px solid var(--border);
+      background: var(--dark);
+    }
+
+    .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+
+    .logo-icon {
+      width: 32px; height: 32px; border-radius: 7px;
+      background: rgba(76,175,120,0.15);
+      display: flex; align-items: center; justify-content: center; font-size: 1rem;
+    }
+
+    .logo-text { font-size: 1.1rem; font-weight: bold; color: var(--white); }
+    .logo-text span { color: var(--amber); }
+
+    .nav-right { display: flex; align-items: center; gap: 1rem; }
+
+    .nav-link {
+      font-family: 'Courier New', monospace;
+      font-size: 0.82rem; color: var(--muted); text-decoration: none; transition: color 0.2s;
+    }
+
+    .nav-link:hover { color: var(--lime); }
+
+    .nav-btn {
+      padding: 0.45rem 1.1rem;
+      background: var(--lime); color: var(--deep);
+      border: none; border-radius: 5px;
+      font-family: Georgia, serif; font-size: 0.85rem; font-weight: bold;
+      text-decoration: none; transition: all 0.2s; display: inline-block;
+    }
+
+    .nav-btn:hover { background: #6dd494; }
+
+    /* HERO */
+    .hero {
+      padding: 5rem 5% 4rem;
+      text-align: center;
+      background: var(--dark);
+      border-bottom: 1px solid var(--border);
+      position: relative; overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute; top: -100px; left: 50%;
+      transform: translateX(-50%);
+      width: 600px; height: 400px;
+      background: radial-gradient(ellipse, rgba(45,122,79,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-inner { position: relative; z-index: 2; max-width: 640px; margin: 0 auto; }
+
+    .hero-tag {
+      display: inline-flex; align-items: center; gap: 7px;
+      background: rgba(76,175,120,0.1); border: 1px solid rgba(76,175,120,0.2);
+      border-radius: 50px; padding: 0.3rem 0.9rem;
+      font-family: 'Courier New', monospace;
+      font-size: 0.68rem; letter-spacing: 1.5px; text-transform: uppercase;
+      color: var(--lime); margin-bottom: 1.2rem;
+    }
+
+    .tag-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--lime); animation: blink 2s infinite;
+    }
+
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+    .hero h1 {
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: normal; line-height: 1.15;
+      color: var(--white); margin-bottom: 0.8rem;
+    }
+
+    .hero h1 em { font-style: italic; color: var(--lime); }
+
+    .hero p {
+      font-size: 1rem; color: var(--muted);
+      line-height: 1.75; max-width: 500px;
+      margin: 0 auto 2rem;
+    }
+
+    .hero-btns { display: flex; gap: 0.8rem; justify-content: center; flex-wrap: wrap; }
+
+    .btn-primary {
+      padding: 0.85rem 2rem;
+      background: var(--lime); color: var(--deep);
+      border: none; border-radius: 6px;
+      font-family: Georgia, serif; font-size: 0.95rem; font-weight: bold;
+      cursor: pointer; text-decoration: none; transition: all 0.2s; display: inline-block;
+    }
+
+    .btn-primary:hover { background: #6dd494; transform: translateY(-2px); }
+
+    .btn-ghost {
+      padding: 0.85rem 2rem;
+      background: transparent; color: var(--cream);
+      border: 1px solid var(--border); border-radius: 6px;
+      font-family: Georgia, serif; font-size: 0.95rem;
+      cursor: pointer; text-decoration: none; transition: all 0.2s; display: inline-block;
+    }
+
+    .btn-ghost:hover { border-color: var(--lime); color: var(--lime); }
+
+    /* TRUST STRIP */
+    .trust-strip {
+      background: rgba(76,175,120,0.05);
+      border-bottom: 1px solid var(--border);
+      padding: 0.9rem 5%;
+      display: flex; justify-content: center; gap: 2.5rem; flex-wrap: wrap;
+    }
+
+    .trust-item {
+      display: flex; align-items: center; gap: 0.5rem;
+      font-family: 'Courier New', monospace;
+      font-size: 0.76rem; color: var(--muted);
+    }
+
+    .trust-item span { color: var(--lime); font-size: 0.95rem; }
+
+    /* PAGE BODY */
+    .page-body { max-width: 960px; margin: 0 auto; padding: 4rem 5%; }
+
+    .sec-label {
+      font-family: 'Courier New', monospace;
+      font-size: 0.65rem; text-transform: uppercase; letter-spacing: 2px;
+      color: var(--amber); margin-bottom: 0.5rem;
+      display: flex; align-items: center; gap: 8px;
+    }
+
+    .sec-label::before { content: ''; width: 16px; height: 1px; background: var(--amber); }
+
+    .sec-title {
+      font-size: 1.7rem; font-weight: normal;
+      color: var(--white); margin-bottom: 0.5rem; line-height: 1.2;
+    }
+
+    .sec-sub {
+      font-size: 0.88rem; color: var(--muted);
+      line-height: 1.7; margin-bottom: 2.5rem; max-width: 500px;
+    }
+
+    /* STEPS */
+    .steps-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 1rem; margin-bottom: 4rem;
+    }
+
+    .step-card {
+      background: var(--dark);
+      border: 1px solid var(--border); border-radius: 12px;
+      padding: 1.5rem 1.2rem; position: relative; overflow: hidden;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+
+    .step-card:hover { border-color: var(--green); transform: translateY(-3px); }
+
+    .step-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, var(--lime), var(--amber));
+    }
+
+    .step-n {
+      font-family: 'Courier New', monospace;
+      font-size: 2rem; font-weight: bold;
+      color: rgba(76,175,120,0.1); line-height: 1; margin-bottom: -4px;
+    }
+
+    .step-icon { font-size: 1.6rem; margin-bottom: 0.6rem; }
+
+    .step-card h4 {
+      font-size: 0.95rem; color: var(--white);
+      margin-bottom: 0.4rem;
+    }
+
+    .step-card p {
+      font-size: 0.78rem; color: var(--muted); line-height: 1.6;
+    }
+
+    /* WHAT YOU CAN SELL */
+    .products-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 0.8rem; margin-bottom: 4rem;
+    }
+
+    .prod-card {
+      background: var(--dark);
+      border: 1px solid var(--border); border-radius: 10px;
+      padding: 1.2rem 1rem; text-align: center;
+      transition: border-color 0.2s, transform 0.2s; cursor: default;
+    }
+
+    .prod-card:hover { border-color: var(--green); transform: translateY(-2px); }
+
+    .prod-emoji { font-size: 2rem; margin-bottom: 0.5rem; }
+
+    .prod-name {
+      font-size: 0.85rem; color: var(--white); margin-bottom: 0.2rem;
+    }
+
+    .prod-type {
+      font-family: 'Courier New', monospace;
+      font-size: 0.65rem; color: var(--muted); text-transform: uppercase; letter-spacing: 1px;
+    }
+
+    /* WHY SELL */
+    .why-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 1rem; margin-bottom: 4rem;
+    }
+
+    .why-card {
+      background: var(--dark);
+      border: 1px solid var(--border); border-radius: 10px;
+      padding: 1.3rem;
+      display: flex; gap: 1rem; align-items: flex-start;
+    }
+
+    .why-icon {
+      width: 38px; height: 38px; border-radius: 8px;
+      background: rgba(76,175,120,0.1);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem; flex-shrink: 0;
+    }
+
+    .why-card h4 { font-size: 0.9rem; color: var(--white); margin-bottom: 0.3rem; }
+    .why-card p  { font-size: 0.78rem; color: var(--muted); line-height: 1.6; }
+
+    /* PAYOUT SECTION */
+    .payout-box {
+      background: var(--dark);
+      border: 1px solid var(--border); border-radius: 14px;
+      padding: 2rem; margin-bottom: 4rem;
+    }
+
+    .payout-title {
+      font-size: 1rem; color: var(--white); margin-bottom: 1rem;
+    }
+
+    .payout-bar-wrap {
+      height: 12px; background: var(--teal);
+      border-radius: 6px; overflow: hidden; display: flex; margin-bottom: 0.7rem;
+    }
+
+    .bar-seller   { width: 85%; background: var(--lime); }
+    .bar-driver   { width: 10%; background: #5bb8f5; }
+    .bar-platform { width: 5%;  background: var(--amber); }
+
+    .payout-labels {
+      display: flex; justify-content: space-between;
+      font-family: 'Courier New', monospace; font-size: 0.72rem;
+    }
+
+    .pl-item { display: flex; align-items: center; gap: 0.4rem; color: var(--muted); }
+    .pl-dot  { width: 8px; height: 8px; border-radius: 50%; }
+
+    /* FAQ */
+    .faq-list { margin-bottom: 4rem; }
+
+    .faq-item {
+      background: var(--dark);
+      border: 1px solid var(--border); border-radius: 8px;
+      margin-bottom: 0.6rem; overflow: hidden;
+    }
+
+    .faq-btn {
+      width: 100%; padding: 0.95rem 1.1rem;
+      background: none; border: none;
+      display: flex; align-items: center; justify-content: space-between;
+      font-family: Georgia, serif; font-size: 0.88rem;
+      color: var(--cream); cursor: pointer; text-align: left;
+      transition: background 0.15s;
+    }
+
+    .faq-btn:hover { background: rgba(255,255,255,0.02); }
+
+    .faq-icon { color: var(--muted); font-size: 0.9rem; transition: transform 0.25s; flex-shrink: 0; }
+    .faq-item.open .faq-icon { transform: rotate(45deg); }
+
+    .faq-body {
+      display: none; padding: 0 1.1rem 0.9rem;
+      font-size: 0.83rem; color: var(--muted); line-height: 1.7;
+    }
+
+    .faq-item.open .faq-body { display: block; }
+
+    /* BOTTOM CTA */
+    .cta {
+      background: linear-gradient(135deg, var(--mid), var(--teal));
+      border: 1px solid var(--green);
+      border-radius: 16px; padding: 2.8rem 2rem;
+      text-align: center; position: relative; overflow: hidden;
+      margin-bottom: 2rem;
+    }
+
+    .cta::before {
+      content: ''; position: absolute; inset: 0;
+      background-image: radial-gradient(circle, rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size: 28px 28px; pointer-events: none;
+    }
+
+    .cta h2 {
+      font-size: 1.7rem; font-weight: normal;
+      color: var(--white); margin-bottom: 0.6rem;
+      position: relative; z-index: 1;
+    }
+
+    .cta p {
+      font-size: 0.88rem; color: var(--muted);
+      line-height: 1.7; max-width: 420px; margin: 0 auto 1.8rem;
+      position: relative; z-index: 1;
+    }
+
+    .cta-btns {
+      display: flex; gap: 0.8rem; justify-content: center;
+      flex-wrap: wrap; position: relative; z-index: 1;
+    }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 1.3rem 5%;
+      display: flex; align-items: center; justify-content: space-between;
+      font-family: 'Courier New', monospace;
+      font-size: 0.72rem; color: var(--muted); flex-wrap: wrap; gap: 0.6rem;
+    }
+
+    footer a { color: var(--muted); text-decoration: none; }
+    footer a:hover { color: var(--lime); }
+
+    @media (max-width: 800px) {
+      .steps-grid   { grid-template-columns: 1fr 1fr; }
+      .products-grid { grid-template-columns: repeat(2, 1fr); }
+      .why-grid     { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 480px) {
+      .steps-grid   { grid-template-columns: 1fr; }
+      .products-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="index.html" class="logo">
+      <div class="logo-icon">🐟</div>
+      <span class="logo-text">Aqua<span>Bridge</span></span>
+    </a>
+    <div class="nav-right">
+      <a href="signin.html" class="nav-link">Sign In</a>
+      <a href="sellersignup1.html" class="nav-btn">Create Account</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-inner">
+      <div class="hero-tag"><span class="tag-dot"></span> Free to join · No hidden fees</div>
+      <h1>Sell your fish &amp; snails<br>to buyers <em>across Nigeria.</em></h1>
+      <p>List what you farm, set your own price, and get paid directly — no middlemen, no delays, fully protected by escrow.</p>
+      <div class="hero-btns">
+        <a href="sellersignup1.html" class="btn-primary">🌿 Create Seller Account</a>
+        <a href="#how" class="btn-ghost">See How It Works ↓</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- TRUST STRIP -->
+  <div class="trust-strip">
+    <div class="trust-item"><span>🐟</span> 500+ active sellers</div>
+    <div class="trust-item"><span>💰</span> 85% payout per order</div>
+    <div class="trust-item"><span>🔒</span> Escrow on every transaction</div>
+    <div class="trust-item"><span>🌍</span> Buyers across 36 states</div>
+  </div>
+
+  <div class="page-body">
+
+    <!-- HOW IT WORKS -->
+    <div id="how">
+      <div class="sec-label">How it works</div>
+      <div class="sec-title">Sell in 4 simple steps</div>
+      <p class="sec-sub">No technical knowledge needed. If you have fish or snails to sell, we handle everything else.</p>
+    </div>
+
+    <div class="steps-grid">
+      <div class="step-card">
+        <div class="step-n">01</div>
+        <div class="step-icon">📝</div>
+        <h4>Create free account</h4>
+        <p>Sign up with your name, phone, and state. Takes less than 3 minutes.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-n">02</div>
+        <div class="step-icon">🐟</div>
+        <h4>List your produce</h4>
+        <p>Add photos, set your price per kg, and tell buyers how much stock you have.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-n">03</div>
+        <div class="step-icon">🤝</div>
+        <h4>Receive orders</h4>
+        <p>Buyers find your listing and pay via Paystack. Funds go into escrow instantly.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-n">04</div>
+        <div class="step-icon">💰</div>
+        <h4>Get paid</h4>
+        <p>Driver confirms delivery with OTP. Your 85% is released to your bank same day.</p>
+      </div>
+    </div>
+
+    <!-- WHAT YOU CAN SELL -->
+    <div class="sec-label">What you can sell</div>
+    <div class="sec-title">Fish, snails. Every format.</div>
+    <p class="sec-sub">Aquaculture or heliculture — fresh, frozen, smoked, or processed.</p>
+
+    <div class="products-grid">
+      <div class="prod-card">
+        <div class="prod-emoji">🐟</div>
+        <div class="prod-name">Live Catfish</div>
+        <div class="prod-type">Aquaculture</div>
+      </div>
+      <div class="prod-card">
+        <div class="prod-emoji">🐠</div>
+        <div class="prod-name">Tilapia</div>
+        <div class="prod-type">Aquaculture</div>
+      </div>
+      <div class="prod-card">
+        <div class="prod-emoji">🔥</div>
+        <div class="prod-name">Smoked Fish</div>
+        <div class="prod-type">Processed</div>
+      </div>
+      <div class="prod-card">
+        <div class="prod-emoji">❄️</div>
+        <div class="prod-name">Frozen Fish</div>
+        <div class="prod-type">Processed</div>
+      </div>
+      <div class="prod-card">
+        <div class="prod-emoji">🐌</div>
+        <div class="prod-name">Giant African Snail</div>
+        <div class="prod-type">Heliculture</div>
+      </div>
+      <div class="prod-card">
+        <div class="prod-emoji">📦</div>
+        <div class="prod-name">Processed Snail</div>
+        <div class="prod-type">Heliculture</div>
+      </div>
+      <div class="prod-card">
+        <div class="prod-emoji">🥚</div>
+        <div class="prod-name">Snail Eggs</div>
+        <div class="prod-type">Heliculture</div>
+      </div>
+      <div class="prod-card">
+        <div class="prod-emoji">🫙</div>
+        <div class="prod-name">Dried Snail</div>
+        <div class="prod-type">Processed</div>
+      </div>
+    </div>
+
+    <!-- WHY SELL -->
+    <div class="sec-label">Why sell here</div>
+    <div class="sec-title">More money. Less stress.</div>
+    <p class="sec-sub">Built specifically for Nigerian fish and snail farmers.</p>
+
+    <div class="why-grid">
+      <div class="why-card">
+        <div class="why-icon">💸</div>
+        <div>
+          <h4>You keep 85% of every sale</h4>
+          <p>Only a small 5% platform fee on completed sales. No listing fee, no monthly charge, nothing upfront.</p>
+        </div>
+      </div>
+      <div class="why-card">
+        <div class="why-icon">🔒</div>
+        <div>
+          <h4>You always get paid</h4>
+          <p>Buyers pay before delivery. Funds sit in escrow until the buyer confirms receipt. You cannot be cheated.</p>
+        </div>
+      </div>
+      <div class="why-card">
+        <div class="why-icon">🚚</div>
+        <div>
+          <h4>We handle delivery for you</h4>
+          <p>Our verified drivers pick up from your farm and deliver to the buyer. You just have the stock ready.</p>
+        </div>
+      </div>
+      <div class="why-card">
+        <div class="why-icon">📍</div>
+        <div>
+          <h4>Buyers come to you</h4>
+          <p>Restaurants, hotels, and wholesalers across Nigeria browse listings every day. You don't need to find them.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- PAYOUT SPLIT -->
+    <div class="payout-box">
+      <div class="payout-title">How your earnings are split on every order</div>
+      <div class="payout-bar-wrap">
+        <div class="bar-seller"></div>
+        <div class="bar-driver"></div>
+        <div class="bar-platform"></div>
+      </div>
+      <div class="payout-labels">
+        <div class="pl-item"><div class="pl-dot" style="background:var(--lime)"></div> <span>85% — You (Seller)</span></div>
+        <div class="pl-item"><div class="pl-dot" style="background:#5bb8f5"></div> <span>10% — Driver</span></div>
+        <div class="pl-item"><div class="pl-dot" style="background:var(--amber)"></div> <span>5% — Platform</span></div>
+      </div>
+    </div>
+
+    <!-- FAQ -->
+    <div class="sec-label">Questions</div>
+    <div class="sec-title">Things sellers ask us</div>
+    <p class="sec-sub" style="margin-bottom:1.5rem">Short, honest answers.</p>
+
+    <div class="faq-list">
+      <div class="faq-item">
+        <button class="faq-btn" onclick="toggleFaq(this)">
+          Is it free to register as a seller?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-body">Yes, completely free. You pay nothing to sign up, set up your profile, or list your produce. We only take 5% when a sale is completed.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-btn" onclick="toggleFaq(this)">
+          When do I receive my money?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-body">The moment the buyer confirms delivery with their OTP, your 85% is released and transferred to your bank account within minutes via Paystack.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-btn" onclick="toggleFaq(this)">
+          What if a buyer cancels or doesn't show up?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-body">Buyers pay before any delivery is arranged. If they cancel after payment, you keep your money. Our dispute team resolves any issue within 24 hours.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-btn" onclick="toggleFaq(this)">
+          Can I sell both fish and snails?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-body">Yes. AquaBridge supports both aquaculture and heliculture. You can list catfish, tilapia, Giant African Snails, and all processed formats under one seller account.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-btn" onclick="toggleFaq(this)">
+          Do I need a smartphone?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-body">A basic Android phone with internet access is enough. The platform is lightweight and designed to work on slow connections common in rural farming areas.</div>
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="cta">
+      <h2>Ready to start selling?</h2>
+      <p>Join 500+ verified sellers already earning more by selling directly on AquaBridge. Free to sign up, takes 3 minutes.</p>
+      <div class="cta-btns">
+        <a href="sellersignup1.html" class="btn-primary">🌿 Create Seller Account</a>
+        <a href="signin.html" class="btn-ghost">Already have account?</a>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <span>© 2025 AquaBridge Nigeria Ltd.</span>
+    <div style="display:flex;gap:1.2rem">
+      <a href="#">Terms</a>
+      <a href="#">Privacy</a>
+      <a href="#">Escrow Policy</a>
+      <a href="index.html">Home</a>
+    </div>
+  </footer>
+
+  <script>
+    function toggleFaq(btn) {
+      const item = btn.parentElement;
+      const wasOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+      if (!wasOpen) item.classList.add('open');
+    }
+  </script>
+
+</body>
+</html>

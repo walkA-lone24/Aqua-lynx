@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sign Up — AquaBridge</title>
+  <style>
+    :root {
+      --deep:  #0a1a14;
+      --dark:  #0f2318;
+      --mid:   #163020;
+      --teal:  #1a4a30;
+      --green: #2d7a4f;
+      --lime:  #4caf78;
+      --amber: #e8a045;
+      --cream: #f5f0e8;
+      --white: #ffffff;
+      --muted: #8aaa94;
+      --border: rgba(255,255,255,0.08);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: Georgia, 'Times New Roman', serif;
+      background: var(--deep);
+      color: var(--cream);
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+
+    /* LEFT */
+    .left {
+      background: var(--dark);
+      padding: 3rem;
+      display: flex; flex-direction: column;
+      justify-content: space-between;
+      border-right: 1px solid var(--border);
+      position: relative; overflow: hidden;
+    }
+
+    .left::before {
+      content: '';
+      position: absolute; bottom: -120px; right: -120px;
+      width: 420px; height: 420px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(45,122,79,0.15) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .logo { display: flex; align-items: center; gap: 10px; position: relative; z-index: 2; text-decoration: none; }
+
+    .logo-icon {
+      width: 34px; height: 34px; border-radius: 8px;
+      background: rgba(76,175,120,0.15);
+      display: flex; align-items: center; justify-content: center; font-size: 1.1rem;
+    }
+
+    .logo-text { font-size: 1.2rem; font-weight: bold; color: var(--white); }
+    .logo-text span { color: var(--amber); }
+
+    .left-body { position: relative; z-index: 2; }
+
+    .left-tag {
+      font-family: 'Courier New', monospace;
+      font-size: 0.65rem; letter-spacing: 2px; text-transform: uppercase;
+      color: var(--lime); margin-bottom: 1rem;
+    }
+
+    .left h2 {
+      font-size: clamp(1.8rem, 2.8vw, 2.4rem);
+      font-weight: normal; line-height: 1.2;
+      color: var(--white); margin-bottom: 1rem;
+    }
+
+    .left h2 em { font-style: italic; color: var(--lime); }
+
+    .left p {
+      font-size: 0.88rem; color: var(--muted);
+      line-height: 1.7; max-width: 340px; margin-bottom: 2rem;
+    }
+
+    .perks { list-style: none; }
+
+    .perks li {
+      display: flex; align-items: center; gap: 0.75rem;
+      padding: 0.6rem 0; border-bottom: 1px solid var(--border);
+      font-size: 0.84rem; color: rgba(245,240,232,0.75);
+      font-family: 'Courier New', monospace;
+    }
+
+    .perks li:last-child { border-bottom: none; }
+
+    .perk-dot {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: var(--lime); flex-shrink: 0;
+    }
+
+    .trust {
+      display: flex; align-items: center; gap: 0.8rem;
+      padding: 1rem; border-radius: 10px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--border);
+      position: relative; z-index: 2;
+    }
+
+    .trust-avatars { display: flex; }
+
+    .trust-avatars span {
+      width: 30px; height: 30px; border-radius: 50%;
+      background: var(--teal); border: 2px solid var(--dark);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.85rem; margin-left: -8px;
+    }
+
+    .trust-avatars span:first-child { margin-left: 0; }
+
+    .trust-text {
+      font-family: 'Courier New', monospace;
+      font-size: 0.75rem; color: var(--muted); line-height: 1.4;
+    }
+
+    .trust-text strong { color: var(--lime); }
+
+    /* RIGHT */
+    .right {
+      padding: 3rem;
+      display: flex; flex-direction: column;
+      justify-content: center;
+      max-width: 500px; width: 100%; margin: 0 auto;
+      overflow-y: auto;
+    }
+
+    .right-header { margin-bottom: 1.8rem; }
+
+    .right-header h3 {
+      font-size: 1.6rem; font-weight: normal;
+      color: var(--white); margin-bottom: 0.3rem;
+    }
+
+    .right-header p {
+      font-family: 'Courier New', monospace;
+      font-size: 0.78rem; color: var(--muted);
+    }
+
+    .right-header p a {
+      color: var(--lime); text-decoration: none; font-weight: bold;
+    }
+
+    .right-header p a:hover { color: #6dd494; }
+
+    /* role toggle */
+    .role-toggle {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 0.5rem; margin-bottom: 1.5rem;
+    }
+
+    .role-btn {
+      padding: 0.6rem;
+      background: var(--mid); border: 1px solid var(--border);
+      border-radius: 6px; font-family: Georgia, serif;
+      font-size: 0.82rem; color: var(--muted);
+      cursor: pointer; transition: all 0.2s; text-align: center;
+    }
+
+    .role-btn.active {
+      background: rgba(76,175,120,0.12);
+      border-color: var(--lime); color: var(--lime);
+    }
+
+    /* google */
+    .btn-google {
+      width: 100%; padding: 0.75rem;
+      background: transparent; color: var(--cream);
+      border: 1px solid var(--border); border-radius: 6px;
+      font-family: Georgia, serif; font-size: 0.88rem;
+      cursor: pointer; transition: all 0.2s;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+    }
+
+    .btn-google:hover { border-color: var(--lime); color: var(--lime); }
+
+    /* divider */
+    .divider {
+      display: flex; align-items: center; gap: 0.8rem; margin: 1rem 0;
+    }
+
+    .divider::before, .divider::after {
+      content: ''; flex: 1; height: 1px; background: var(--border);
+    }
+
+    .divider span {
+      font-family: 'Courier New', monospace;
+      font-size: 0.7rem; color: var(--muted);
+    }
+
+    /* form */
+    .section-tag {
+      font-family: 'Courier New', monospace;
+      font-size: 0.62rem; text-transform: uppercase; letter-spacing: 1.5px;
+      color: var(--amber); margin-bottom: 0.8rem;
+      display: flex; align-items: center; gap: 6px;
+    }
+
+    .section-tag::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+    .form-row {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 0.8rem; margin-bottom: 0.8rem;
+    }
+
+    .form-group { margin-bottom: 0.8rem; }
+
+    label {
+      display: block; font-family: 'Courier New', monospace;
+      font-size: 0.68rem; color: var(--muted);
+      letter-spacing: 0.5px; text-transform: uppercase;
+      margin-bottom: 0.32rem;
+    }
+
+    input, select {
+      width: 100%; padding: 0.7rem 0.9rem;
+      background: var(--mid); color: var(--cream);
+      border: 1px solid var(--border); border-radius: 6px;
+      font-family: Georgia, serif; font-size: 0.88rem;
+      outline: none; transition: border-color 0.2s;
+    }
+
+    input::placeholder { color: var(--muted); }
+    input:focus, select:focus { border-color: var(--lime); }
+    select option { background: var(--mid); }
+
+    /* phone */
+    .phone-row { display: flex; }
+
+    .prefix {
+      padding: 0.7rem 0.75rem;
+      background: var(--teal); color: var(--muted);
+      border: 1px solid var(--border); border-right: none;
+      border-radius: 6px 0 0 6px;
+      font-family: 'Courier New', monospace; font-size: 0.82rem;
+      white-space: nowrap;
+    }
+
+    .phone-row input { border-radius: 0 6px 6px 0; }
+
+    /* pass */
+    .pass-wrap { position: relative; }
+    .pass-wrap input { padding-right: 2.6rem; }
+
+    .pass-eye {
+      position: absolute; right: 0.8rem; top: 50%;
+      transform: translateY(-50%);
+      cursor: pointer; font-size: 0.85rem;
+      color: var(--muted); user-select: none; transition: color 0.2s;
+    }
+
+    .pass-eye:hover { color: var(--lime); }
+
+    /* checkbox */
+    .check-row {
+      display: flex; align-items: flex-start; gap: 0.6rem;
+      margin-bottom: 1.2rem;
+    }
+
+    .check-row input[type="checkbox"] {
+      width: 16px; height: 16px; flex-shrink: 0;
+      margin-top: 3px; accent-color: var(--lime); cursor: pointer;
+    }
+
+    .check-row label {
+      font-size: 0.78rem; color: var(--muted);
+      text-transform: none; letter-spacing: 0;
+      font-family: Georgia, serif; cursor: pointer;
+    }
+
+    .check-row label a { color: var(--lime); text-decoration: none; }
+
+    /* submit */
+    .btn-submit {
+      width: 100%; padding: 0.9rem;
+      background: var(--lime); color: var(--deep);
+      border: none; border-radius: 6px;
+      font-family: Georgia, serif;
+      font-size: 0.95rem; font-weight: bold;
+      cursor: pointer; transition: all 0.2s;
+    }
+
+    .btn-submit:hover {
+      background: #6dd494;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(76,175,120,0.25);
+    }
+
+    @media (max-width: 800px) {
+      body { grid-template-columns: 1fr; }
+      .left { display: none; }
+      .right { padding: 2rem 1.5rem; max-width: 100%; }
+      .form-row { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- LEFT -->
+  <div class="left">
+    <a href="index.html" class="logo">
+      <div class="logo-icon">🐟</div>
+      <span class="logo-text">Aqua<span>Bridge</span></span>
+    </a>
+
+    <div class="left-body">
+      <div class="left-tag">Create Account</div>
+      <h2>Trade fish &amp; snails<br>with <em>trusted</em><br>buyers nationwide.</h2>
+      <p>Join Nigeria's leading aquaculture and heliculture marketplace. Sell directly, get paid instantly, no middlemen.</p>
+
+      <ul class="perks">
+        <li><div class="perk-dot"></div> Free to register · No upfront cost</li>
+        <li><div class="perk-dot"></div> 85% payout per order via Paystack</li>
+        <li><div class="perk-dot"></div> Escrow protects every transaction</li>
+        <li><div class="perk-dot"></div> Buyers across all 36 Nigerian states</li>
+        <li><div class="perk-dot"></div> Logistics handled by verified drivers</li>
+      </ul>
+    </div>
+
+    <div class="trust">
+      <div class="trust-avatars">
+        <span>🐟</span><span>🐌</span><span>🌿</span><span>🚜</span>
+      </div>
+      <div class="trust-text">
+        <strong>500+ verified sellers</strong> already registered.<br>
+        Approval takes under 24 hours.
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT -->
+  <div class="right">
+
+    <div class="right-header">
+      <h3>Create your account</h3>
+      <p>Already have an account? <a href="signin.html">Sign in here →</a></p>
+    </div>
+
+    <!-- ROLE TOGGLE -->
+    <div class="role-toggle">
+      <button class="role-btn active" id="btn-seller" onclick="setRole('seller')">🐟 I'm a Seller</button>
+      <button class="role-btn" id="btn-buyer" onclick="setRole('buyer')">🛒 I'm a Buyer</button>
+    </div>
+
+    <!-- GOOGLE -->
+    <button class="btn-google">
+      <svg width="16" height="16" viewBox="0 0 18 18" fill="none">
+        <path d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844a4.14 4.14 0 01-1.796 2.716v2.259h2.908c1.702-1.567 2.684-3.875 2.684-6.615z" fill="#4285F4"/>
+        <path d="M9 18c2.43 0 4.467-.806 5.956-2.184l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 009 18z" fill="#34A853"/>
+        <path d="M3.964 10.71A5.41 5.41 0 013.682 9c0-.593.102-1.17.282-1.71V4.958H.957A8.996 8.996 0 000 9c0 1.452.348 2.827.957 4.042l3.007-2.332z" fill="#FBBC05"/>
+        <path d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 00.957 4.958L3.964 7.29C4.672 5.163 6.656 3.58 9 3.58z" fill="#EA4335"/>
+      </svg>
+      Continue with Google
+    </button>
+
+    <div class="divider"><span>or fill in your details</span></div>
+
+    <div class="section-tag">Personal Details</div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label>First Name</label>
+        <input type="text" placeholder="e.g. Chukwudi" />
+      </div>
+      <div class="form-group">
+        <label>Last Name</label>
+        <input type="text" placeholder="e.g. Eze" />
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Email Address</label>
+      <input type="email" id="email" placeholder="you@example.com" />
+    </div>
+
+    <div class="form-group">
+      <label>Phone Number</label>
+      <div class="phone-row">
+        <div class="prefix">🇳🇬 +234</div>
+        <input type="tel" placeholder="8012345678" />
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label>Password</label>
+        <div class="pass-wrap">
+          <input type="password" id="p1" placeholder="Min. 8 characters" />
+          <span class="pass-eye" onclick="togglePass('p1',this)">👁</span>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Confirm Password</label>
+        <div class="pass-wrap">
+          <input type="password" id="p2" placeholder="Repeat password" />
+          <span class="pass-eye" onclick="togglePass('p2',this)">👁</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="check-row">
+      <input type="checkbox" id="terms" />
+      <label for="terms">
+        I agree to AquaBridge's <a href="#">Terms of Service</a> and
+        <a href="#">Privacy Policy</a>.
+      </label>
+    </div>
+
+    <button class="btn-submit" onclick="signUp()">Create Account →</button>
+
+  </div>
+
+  <script>
+    let role = 'seller';
+
+    function setRole(r) {
+      role = r;
+      document.getElementById('btn-seller').classList.toggle('active', r === 'seller');
+      document.getElementById('btn-buyer').classList.toggle('active', r === 'buyer');
+    }
+
+    function togglePass(id, el) {
+      const i = document.getElementById(id);
+      i.type = i.type === 'password' ? 'text' : 'password';
+      el.textContent = i.type === 'password' ? '👁' : '🙈';
+    }
+
+    function signUp() {
+      const terms = document.getElementById('terms').checked;
+      if (!terms) { alert('Please agree to the Terms of Service.'); return; }
+      // redirect based on role
+      if (role === 'seller') {
+        window.location.href = 'aqua-farm-info.html';
+      } else {
+        window.location.href = 'aqua-home.html';
+      }
+    }
+  </script>
+
+</body>
+</html>
